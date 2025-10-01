@@ -142,3 +142,27 @@ export const logByOperationColumns=[// 表格列定义
     width: 180
   },
 ]
+
+//运行日志界面
+export const logByRunningColumns=[// 表格列定义
+  {
+    title: '文件名',
+    dataIndex: 'name',
+    width: 60,
+  },
+  {
+    title: '文件路径',
+    dataIndex: 'path',
+    width: 80
+  },
+  {
+    title: '文件字节大小',
+    dataIndex: 'size',
+    width: 30
+  },
+  {
+    title: '修改时间',
+    dataIndex: 'mtime',
+    width: 50
+  },
+]

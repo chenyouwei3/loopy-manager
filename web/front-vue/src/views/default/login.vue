@@ -223,8 +223,8 @@
 <script setup>
 import storage from 'store'   
 import { login, register } from '@/tools/api'; 
-import {msgError, msgSuccess } from '@/tools/message';
-import { UserOutlined, LockOutlined, WechatOutlined, QqOutlined,MobileOutlined,SafetyOutlined,MailOutlined,TwitterOutlined,InstagramOutlined,GoogleOutlined,FacebookOutlined,GithubOutlined} from '@ant-design/icons-vue';   
+import {msgError } from '@/tools/message';
+import { UserOutlined, LockOutlined, WechatOutlined, QqOutlined,MailOutlined,TwitterOutlined,InstagramOutlined,GoogleOutlined,FacebookOutlined,GithubOutlined} from '@ant-design/icons-vue';   
 import { ref,getCurrentInstance } from 'vue';  
 import { useRouter } from 'vue-router'
 import {loginRules} from '@/tools/page/columns'
@@ -309,7 +309,7 @@ const handleLogin = async () => {
       storage.set("user_info", {name: ret.data.user.name, account: ret.data.user.account}, 1 * 60 * 60 * 1000);
       setTimeout(() => {
         loadingLogin.value = false;
-        router.push('/role-center');
+        router.push('/auth-user');
       }, 500);
     } else {
       loadingLogin.value = false;

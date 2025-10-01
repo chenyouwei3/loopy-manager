@@ -2,12 +2,20 @@ APP:
   name: exchange   #服务名称
   port: 8080
   mode: run   #运行模式
+  runLog: ../logs
+
+PostOffice:
+  sslTypeAutoHTTP:
+  sslTypeAutoDNS:
+
+
+
 
 MySQL:
   driverName: mysql
   host: 106.12.19.43
   port: 6446
-  database: web_bucked
+  database: web_backed
   username: root
   password: root
   charset: utf8mb4

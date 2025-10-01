@@ -1,5 +1,12 @@
 import {ref, reactive } from 'vue'
-import { roleList, userList,roleRemove,userRemove,logByOperationList} from '@/tools/api'
+import {
+  roleList,
+  userList,
+  roleRemove,
+  userRemove,
+  logByOperationList,
+  logByRunningList,
+} from '@/tools/api'
 export const useTable = ( dataKey = 'list') => {
   const loading = ref(false)//数据加载情况
   const tableData = ref([])//表格情况
@@ -31,10 +38,13 @@ export const useTable = ( dataKey = 'list') => {
     keywordField = 'email'
     modalTitle.value='新增用户'
     break
-  case "logs":
+  case "logs-operation":
     getFn=logByOperationList
     keywordField = 'account'
     break 
+  case "logs-running":
+    getFn=logByRunningList
+    break
   default:
 
   }

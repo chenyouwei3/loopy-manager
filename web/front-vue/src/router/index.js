@@ -41,18 +41,26 @@ const routes = [
 		},
 		component: () => import('@/views/log-center/operation.vue')
 	},
+	{
+		name:"log-running",
+		path:"/log-running",
+		meta:{
+			title:"运行日志"
+		},
+		component: () => import('@/views/log-center/running.vue')
+	},
 	//权限中心
 	{
-		name:"role-center",
-		path:"/role-center",
+		name:"auth-role",
+		path:"/auth-role",
 		meta:{
 			title:"角色管理"
 		},
 		component: () => import('@/views/auth-center/role.vue')
 	},
 	{
-		name:"user-center",
-		path:"/user-center",
+		name:"auth-user",
+		path:"/auth-user",
 		meta:{
 			title:"用户管理"
 		},

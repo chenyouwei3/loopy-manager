@@ -14,13 +14,13 @@
           </a-button>
           <template #overlay>
             <a-menu>
-              <a-menu-item key="role" @click="handleNavigation('role-center')">
-                <template #icon><team-outlined /></template>
-                角色管理
-              </a-menu-item>
-              <a-menu-item key="user" @click="handleNavigation('user-center')">
+              <a-menu-item key="user" @click="handleNavigation('auth-user')">
                 <template #icon><user-outlined /></template>
                 用户管理
+              </a-menu-item>
+              <a-menu-item key="role" @click="handleNavigation('auth-role')">
+                <template #icon><team-outlined /></template>
+                角色管理
               </a-menu-item>
             </a-menu>
           </template>
@@ -37,6 +37,10 @@
               <a-menu-item key="operation" @click="handleNavigation('log-operation')">
                 <template #icon><history-outlined /></template>
                 操作日志
+              </a-menu-item>
+              <a-menu-item key="running" @click="handleNavigation('log-running')">
+                <template #icon><history-outlined /></template>
+                运行日志
               </a-menu-item>
             </a-menu>
           </template>

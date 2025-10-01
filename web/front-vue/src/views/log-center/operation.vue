@@ -68,7 +68,7 @@ const {
   resetSearch,
   handleSearch,
   handleTableChange,
-} = useTable('logs');
+} = useTable('logs-operation');
 const onTimeRangeChange = newTimeRangeHandler(searchForm)
 const columns = logByOperationColumns //表格定义
 // 组件挂载时获取数据

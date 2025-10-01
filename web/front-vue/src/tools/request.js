@@ -4,7 +4,7 @@ import { msgSuccess,msgError } from './message';
 import { VueAxios } from './axios'; 
 // 创建 axios 实例
 const request = axios.create({
-  baseURL: "http://localhost:8080", // 正确的 API 地址
+  baseURL: "http://192.168.3.4:8080", // 正确的 API 地址
   timeout: 5000, //请求超时时间
 });
 
