@@ -15,7 +15,8 @@ var ErrorCodeMap = map[int]ResponseMsg{
 	5100: {"添加失败", "Add failed"},
 	5101: {ZhCn: "数据已存在", EnUs: "The data already exists"},
 	5102: {ZhCn: "数据不存在", EnUs: "The data is not already exists"},
-
+	5103: {ZhCn: "资源已存在", EnUs: "The resource already exists"},
+	5104: {ZhCn: "资源不存在", EnUs: "The Resource does not exist"},
 	5110: {"删除失败", "Delete failed"},
 
 	5120: {"更新失败", "Modification failed"},

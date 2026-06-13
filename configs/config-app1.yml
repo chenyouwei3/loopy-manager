@@ -9,8 +9,6 @@ PostOffice:
   sslTypeAutoDNS:
 
 
-
-
 MySQL:
   driverName: mysql
   host: 106.12.19.43

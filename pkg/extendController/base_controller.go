@@ -16,9 +16,9 @@ type BaseController struct {
 func (b *BaseController) SendResponse(c *gin.Context, httpResponseCode, CustomCode int, msg ResponseMsg, data interface{}, err error) {
 	if err != nil {
 		msg.EnUs = fmt.Sprintf("%s : %v", msg.EnUs, err)
-		b.RunLog.Error(msg.ZhCn + "/|^_^|/" + msg.EnUs) //定义日志输出格式
+		b.RunLog.Error("|HTTPS Server|Zh:" + msg.ZhCn + "|En:|" + msg.EnUs)
 	} else {
-		b.RunLog.Info(msg.ZhCn + "/|^_^|/" + msg.EnUs) //定义日志输出格式
+		b.RunLog.Info("|HTTPS Server|Zh:" + msg.ZhCn + "|En:|" + msg.EnUs)
 	}
 
 	c.JSON(httpResponseCode, Response{

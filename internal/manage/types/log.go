@@ -12,14 +12,19 @@ type LogByOperationGetListReq struct {
 }
 
 type LogByOperationGetListResp struct {
-	Logs  []models.OperationLog `json:"logs"`
+	Logs  []models.OperationLog `json:"logs-operation"`
 	Total int64                 `json:"total"`
 }
 
 // 查询运行日志
-type LogByRunGetListReq struct {
+type LogByRunningGetListReq struct {
 	CurrPage  string `json:"currPage"`
 	PageSize  string `json:"pageSize"`
 	StartTime string `json:"startTime"`
 	EndTime   string `json:"endTime"`
+}
+
+type LogByRunningGetListResp struct {
+	Logs  []models.RunningLog `json:"logs-running"`
+	Total int                 `json:"total"`
 }

@@ -7,10 +7,9 @@ import (
 	"io"
 	"time"
 
-	"gorm.io/gorm"
-
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
 // 日志协程需要的通道

@@ -42,14 +42,14 @@ func main() {
 	//	http.ListenAndServe("0.0.0.0:6060", nil)
 	//}()
 	//运行消费操作日志协程
-	middleware.InitOperationLogWorker(runLog.ZapLog, mysqlDB.DB)
+	middleware.InitOperationLogWorker(runLog.RunningLog, mysqlDB.DB)
 	//运行日志退出
 	defer func() {
-		if err := runLog.ZapLog.Sync(); err != nil {
+		if err := runLog.RunningLog.Sync(); err != nil {
 			log.Println("运行日志刷出失败:", err)
 		}
 	}()
-	if err := routers.NewRouter().Run(":" + conf.SystemConfig.APP.Port); err != nil {
+	if err := routers.NewRouter().Run("0.0.0.0:" + conf.SystemConfig.APP.Port); err != nil {
 		panic(err)
 	}
 }

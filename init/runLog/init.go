@@ -1,19 +1,26 @@
 package runLog
 
 import (
-	conf "gin-web/init/config"
+	"gin-web/init/config"
 	"os"
+	"path/filepath"
 	"time"
 
+	"github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
 
-var ZapLog *zap.Logger
+var RunningLog *zap.Logger
 
-func InitRunLog(conf conf.Config) error {
-	// 配置日志格式
-	config := zapcore.EncoderConfig{
+func InitRunLog(conf config.Config) error {
+	// 确保日志目录存在
+	if err := os.MkdirAll(conf.APP.RunLog, os.ModePerm); err != nil {
+		return err
+	}
+
+	// 日志编码配置
+	encoderConfig := zapcore.EncoderConfig{
 		TimeKey:      "time",
 		LevelKey:     "level",
 		MessageKey:   "msg",
@@ -21,38 +28,31 @@ func InitRunLog(conf conf.Config) error {
 		EncodeLevel:  zapcore.CapitalLevelEncoder,
 		EncodeCaller: zapcore.ShortCallerEncoder,
 	}
+	encoder := zapcore.NewJSONEncoder(encoderConfig)
 
-	// 日志文件路径（每天一个）
-	today := time.Now().Format("2006-01-02")
-	logFilePath := conf.APP.RunLog + "/" + today + ".log"
-
-	// 确保 logs 目录存在
-	if err := os.MkdirAll("../logs", os.ModePerm); err != nil {
-		return err
-	}
-
-	// 文件存在就追加，不存在就创建
-	file, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	// 🔥 使用 file-rotatelogs 按天轮转
+	logFileName := filepath.Join(conf.APP.RunLog, "app-%Y-%m-%d.log")
+	//每次utc时间轮询
+	rotator, err := rotatelogs.New(
+		logFileName, // 轮转后的文件名，%Y-%m-%d 会被替换为日期
+		rotatelogs.WithLinkName(filepath.Join(conf.APP.RunLog, "app.log")), // 软链接指向最新日志
+		rotatelogs.WithMaxAge(30*24*time.Hour),                             // 30天过期
+		rotatelogs.WithRotationTime(24*time.Hour),                          // 每24小时轮转一次
+	)
 	if err != nil {
 		return err
 	}
-	writeSyncer := zapcore.AddSync(file)
 
-	// 创建 core
-	var core zapcore.Core
+	// 日志级别
+	var level zapcore.Level
 	if conf.APP.Mode == "debug" {
-		core = zapcore.NewCore(
-			zapcore.NewJSONEncoder(config),
-			writeSyncer,
-			zapcore.InfoLevel, // 会输出Info/Warn/Error
-		)
+		level = zapcore.DebugLevel // 开启所有日志，包括 Debug
 	} else {
-		core = zapcore.NewCore(
-			zapcore.NewJSONEncoder(config),
-			writeSyncer,
-			zapcore.WarnLevel, //会输出Warn/Error
-		)
+		level = zapcore.InfoLevel //只屏蔽 Debug,输出 Info 及以上
 	}
-	ZapLog = zap.New(core)
+
+	// 🔥 将 rotator (它实现了 WriteSyncer) 传给 zap
+	core := zapcore.NewCore(encoder, zapcore.AddSync(rotator), level)
+	RunningLog = zap.New(core, zap.AddCaller())
 	return nil
 }

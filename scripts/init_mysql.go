@@ -49,14 +49,14 @@ func init() {
 func main() {
 	var err error
 	role_admin := &models.Role{
-		1,
+		0,
 		time.Now(),
 		t,
 		"super admin",
 		""}
 	//role
 	role_user := models.Role{
-		2,
+		1,
 		time.Now(),
 		t,
 		"normal user",
